@@ -4,9 +4,14 @@
 
 std::shared_ptr<Scene> GameSystem::_active_scene = nullptr;
 
+sf::RenderWindow* GameSystem::_window = nullptr;
+
+
 void GameSystem::start(unsigned int width, unsigned int height,
 	const std::string& name, const float& time_step) {
 	sf::RenderWindow window(sf::VideoMode({ width, height }), name);
+	_window = &window;
+	window.setFramerateLimit(60);
 	_init();
 	sf::Event event;
 	while (window.isOpen()) {
@@ -32,6 +37,7 @@ void GameSystem::start(unsigned int width, unsigned int height,
 	}
 	window.close();
 	clean();
+	_window = nullptr;
 }
 
 void GameSystem::_init() {
@@ -61,6 +67,26 @@ void GameSystem::clean() {
 
 void GameSystem::set_active_scene(const std::shared_ptr<Scene>& act_sc) {
 	_active_scene = act_sc;
+}
+
+void GameSystem::resize_window(unsigned int width, unsigned int height) {
+	if (_window != nullptr) {
+
+		// Resize the actual window
+		_window->setSize(sf::Vector2u(width, height));
+
+		// Update the view so the maze doesn't stretch
+		sf::View view(
+			sf::FloatRect(
+				0.f,
+				0.f,
+				static_cast<float>(width),
+				static_cast<float>(height)
+			)
+		);
+
+		_window->setView(view);
+	}
 }
 
 void GameSystem::reset(){

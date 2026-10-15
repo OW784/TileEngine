@@ -1,5 +1,8 @@
 #include <string>
 #include "game_system.hpp"
+#include "game_parameters.hpp"
+
+using param = Parameters;
 
 class MazeScene : public Scene {
 public:

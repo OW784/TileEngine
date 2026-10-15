@@ -25,15 +25,23 @@ protected:
 
 class GameSystem {
 public:
-	static void start(unsigned int width, unsigned int height,
-		const std::string& name, const float& time_step);
-	static void clean();
-	static void reset();
-	static void set_active_scene(const std::shared_ptr<Scene>& act_sc);
+    static void start(unsigned int width, unsigned int height,
+        const std::string& name, const float& time_step);
+
+    static void clean();
+    static void reset();
+    static void set_active_scene(const std::shared_ptr<Scene>& act_sc);
+
+    // ADD THIS
+    static void resize_window(unsigned int width, unsigned int height);
 
 private:
-	static void _init();
-	static void _update(const float& dt);
-	static void _render(sf::RenderWindow& window);
-	static std::shared_ptr<Scene> _active_scene;
+    static void _init();
+    static void _update(const float& dt);
+    static void _render(sf::RenderWindow& window);
+
+    static std::shared_ptr<Scene> _active_scene;
+
+    // ADD THIS
+    static sf::RenderWindow* _window;
 };
